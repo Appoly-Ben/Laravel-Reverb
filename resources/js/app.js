@@ -1,7 +1,10 @@
 import './bootstrap';
+import { createApp } from "vue";
 
-import Alpine from 'alpinejs';
+import PodcastsIndex from './components/Podcasts/Index.vue';
 
-window.Alpine = Alpine;
+const app = createApp({});
 
-Alpine.start();
+app.component('podcasts-index', PodcastsIndex);
+
+app.mount('#app');

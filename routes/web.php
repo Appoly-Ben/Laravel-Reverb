@@ -1,11 +1,18 @@
 <?php
 
+use App\Http\Controllers\PodcastController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Podcast;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $podcasts = Podcast::all();
+
+    return view('welcome', ['podcasts' => $podcasts]);
 });
+
+Route::post('/publish-podcast', [PodcastController::class, 'publish'])->name('podcast.publish');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -17,4 +24,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
