@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->default(1);
             $table->string('title');
+            $table->boolean('is_publishing')->default(0);
             $table->boolean('is_published')->default(0);
             $table->timestamps();
         });

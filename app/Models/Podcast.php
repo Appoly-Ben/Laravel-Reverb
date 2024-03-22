@@ -12,6 +12,7 @@ class Podcast extends Model
     protected $fillable = [
         'id',
         'title',
+        'is_publishing',
         'is_published',
     ];
 

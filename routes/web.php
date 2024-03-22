@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $podcasts = Podcast::all();
+    $podcasts = Podcast::where('user_id', auth()->user()->id)->get();
 
     return view('welcome', ['podcasts' => $podcasts]);
 });

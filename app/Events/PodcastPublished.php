@@ -31,6 +31,6 @@ class PodcastPublished implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
-        return new Channel('podcasts-published.' . $this->podcast->id);
+        return new PrivateChannel('podcasts-published.' . $this->podcast->id);
     }
 }

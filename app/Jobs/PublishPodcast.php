@@ -32,6 +32,7 @@ class PublishPodcast implements ShouldQueue
     {
         sleep(5);
         $this->podcast->update(['is_published' => true]);
+        $this->podcast->update(['is_publishing' => false]);
         PodcastPublished::dispatch($this->podcast);
     }
 }

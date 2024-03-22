@@ -11,7 +11,8 @@
                         class="h-4 w-4 rounded-full inline-block mr-2" :ref="'podcast' + podcast.id + 'status'"></span>
 
 
-                    <button class="..." id="publishPodcast{{ podcast.id }}" v-on:click="publishPodcast(podcast)">
+                    <button class="..." id="publishPodcast{{ podcast.id }}" v-on:click="publishPodcast(podcast)"
+                        :disabled="podcast.is_published || podcast.is_publishing">
                         <span>{{ getButtonText(podcast) }}</span>
                     </button>
                 </div>
@@ -30,12 +31,18 @@ export default {
     },
     methods: {
         publishPodcast(podcast) {
-            podcast.is_publishing = true;
             axios.post('/publish-podcast', { 'podcastId': podcast.id })
+                .then(function (response) {
+                    podcast.is_publishing = response.data.podcast.is_publishing;
+                })
+                .catch(function (error) {
+                    // Handle error if the request fails
+                    console.error('Error:', error);
+                });
         },
         setupEchoListeners() {
             this.podcasts.forEach(podcast => {
-                Echo.channel('podcasts-published.' + podcast.id).listen('PodcastPublished', (e) => {
+                Echo.private('podcasts-published.' + podcast.id).listen('PodcastPublished', (e) => {
                     let podcastData = e.podcast
                     if (podcastData.is_published) {
                         let foundPodcast = this.podcastsData.find(podcast => podcast.id === podcastData.id);
